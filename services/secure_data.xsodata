@@ -1,0 +1,19 @@
+service {
+	"KGORIN"."Products" as "Products";
+
+	entity "_SYS_BIC"."kgorin.shoplist.procedures/ShoplistHeader" as "Header"
+	with("ShoplistID", "UserID", "Description", "Date")
+	keys("ShoplistID")
+	navigates ("ToItem" as "ItemRef")
+	create using "kgorin.shoplist.procedures::ShopListCreate";
+	
+    association "ToItem" principal "Header"("ShoplistID")
+    multiplicity "1" dependent "Items"("ShoplistID") multiplicity "*";
+    
+    "KGORIN"."SHOPLIST/Items" as "Items"
+    navigates ("ToProduct" as "ProductRef")
+    create using "kgorin.shoplist.procedures::ShopItmCreate";
+    
+    association "ToProduct" principal "Items"("ProductID")
+    multiplicity "1" dependent "Products"("ProductID") multiplicity "1";
+}

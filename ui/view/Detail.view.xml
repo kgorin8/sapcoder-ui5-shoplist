@@ -1,0 +1,36 @@
+<mvc:View controllerName="kgorin.shoplist.view.Detail"
+	xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m">
+
+	<Page showNavButton="{device>/isPhone}" navButtonPress="onNavBack"
+		class="sapUiFioriObjectPage" title="{i18n>detailsEventTitle}">
+		<content>
+			<IconTabBar select="onDetailSelect" id="idIconTabBar">
+				<items>
+					<IconTabFilter key="ItemRef" text="{i18n>navViewList}"
+						icon="sap-icon://show">
+						<content>
+							<core:Fragment fragmentName="kgorin.shoplist.view.ViewList" 
+								type="XML" />
+						</content>
+					</IconTabFilter>
+					<IconTabFilter key="ItemRef" text="{i18n>navPictureList}"
+						icon="sap-icon://request">
+						<content>
+							<core:Fragment fragmentName="kgorin.shoplist.view.DoneList" 
+								type="XML" />
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+
+		</content>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button icon="sap-icon://add" text="{i18n>addNewItemText}" tooltip="{i18n>addNewItemTooltip}"
+						press="onAddItem" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

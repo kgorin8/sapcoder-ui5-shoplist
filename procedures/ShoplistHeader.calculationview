@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="ShoplistHeader" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="2.3" defaultClient="$$client$$" visibility="reportingEnabled" calculationScenarioType="SCRIPT_BASED" scriptParametersCaseSensitive="true" enforceSqlExecution="false" runWithInvokerPrivileges="true">
+<descriptions defaultDescription="ShoplistHeader"/>
+<localVariables/>
+<variableMappings/>
+<dataSources/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:SqlScriptView" id="Script_View">
+    <viewAttributes>
+      <viewAttribute id="ShoplistID" datatype="VARCHAR" length="20"/>
+      <viewAttribute id="UserID" datatype="VARCHAR" length="20" hidden="true"/>
+      <viewAttribute id="Description" datatype="NVARCHAR" length="256"/>
+      <viewAttribute id="Date" datatype="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <definition>/********* Begin Procedure Script ************/ 
+BEGIN 
+
+declare lv_user string;
+SELECT CURRENT_USER &quot;current user&quot; into lv_user FROM DUMMY;
+var_out = SELECT * from &quot;KGORIN&quot;.&quot;SHOPLIST/Header&quot; WHERE &quot;UserID&quot; = lv_user;
+ 
+END /********* End Procedure Script ************/</definition>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Script_View">
+  <attributes>
+    <attribute id="ShoplistID" order="1" key="true">
+      <keyMapping columnObjectName="Script_View" columnName="ShoplistID"/>
+    </attribute>
+    <attribute id="UserID" order="2" hidden="true">
+      <keyMapping columnObjectName="Script_View" columnName="UserID"/>
+    </attribute>
+    <attribute id="Description" order="3" semanticType="empty">
+      <keyMapping columnObjectName="Script_View" columnName="Description"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="Date" order="4" aggregationType="max" measureType="simple">
+      <measureMapping columnObjectName="Script_View" columnName="Date"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

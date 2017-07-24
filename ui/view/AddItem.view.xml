@@ -1,0 +1,45 @@
+<mvc:View controllerName="kgorin.shoplist.view.AddItem"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:c="sap.ui.core"
+	xmlns="sap.m">
+	<Page class="sapUiFioriObjectPage" title="{i18n>AddItemTitle}">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto">
+			<l:content>
+				<f:SimpleForm id="idAddItemForm" minWidth="800"
+					maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+					labelSpanL="3" labelSpanM="3" emptySpanL="4"
+					emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+					<f:content>
+						<!-- Quantity -->
+						<Label text="{i18n>AddItemQuantityText}" />
+						<StepInput id="idItemQuantity"
+							value="{newItemModel>/Details/quantity}"
+							min="1"
+							max="99"
+							step="1" width="110px"/>
+						<!-- Product description in free form -->
+						<Label text="{i18n>AddItemDescriptionText}" />
+						<Input id="idItemDescription" value="{newItemModel>/Details/name}" placeholder="{i18n>AddItemDescriptionPlaceholder}"
+				        showSuggestion="true" suggest="handleSuggest"
+                                suggestionItems="{path:'/Products'}">
+							<suggestionItems>
+								<c:Item text="{Description}" />
+							</suggestionItems>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button text="{i18n>buttonSubmit}" tooltip="{i18n>AddItemButtonSubmitTooltip}" type="Emphasized"
+						press="onSubmit" />
+					<Button text="{i18n>buttonCancel}" tooltip="{i18n>AddItemButtonCancelTooltip}" press="onCancel" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

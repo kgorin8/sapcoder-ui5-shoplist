@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<Dialog
+		title="{i18n>dialogSuccessCreationTitle}"
+		type="Message">
+		<content>
+			<Text text="{i18n>addCommentSuccessDialogMsgText}" />
+		</content>
+		<beginButton>
+			<Button text="{i18n>dialogCloseButton}" press="dialogCloseButton" />
+		</beginButton>
+	</Dialog>
+</core:FragmentDefinition>

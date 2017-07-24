@@ -1,0 +1,37 @@
+<mvc:View controllerName="kgorin.shoplist.view.AddEvent"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:c="sap.ui.core" xmlns="sap.m">
+	<Page class="sapUiFioriObjectPage" title="{i18n>addEventTitle}">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto">
+			<l:content>
+				<f:SimpleForm id="idAddEventForm" minWidth="800"
+					maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+					labelSpanL="3" labelSpanM="3" emptySpanL="4"
+									emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+					<f:content>
+						<!-- Event Form title -->
+						<c:Title text="{i18n>addEventFormHeading}" />
+						<!-- Shoplist description -->
+						<Label text="{i18n>addEventTextAreaAbstractLabel}" />
+						<TextArea rows="5" value="{newHeaderModel>/Details/description}"
+							placeholder="{i18n>addEventTextAreaAbstractPlaceholder}" />
+						<!-- Shoplist date -->
+						<Label text="{i18n>addEventDateTimeStartDateLabel}" />
+						<DateTimeInput type="Date" style="medium"
+							dateValue="{newHeaderModel>/Details/date}"
+							placeholder="{i18n>addEventStartDatePlaceholder}" />
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button text="{i18n>buttonSubmit}" tooltip="{i18n>addEventButtonSubmitTooltip}" type="Emphasized"
+						press="onSubmit" />
+					<Button text="{i18n>buttonCancel}" tooltip="{i18n>addEventButtonCancelTooltip}" press="onCancel" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

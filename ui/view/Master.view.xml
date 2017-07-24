@@ -1,0 +1,38 @@
+<mvc:View controllerName="kgorin.shoplist.view.Master"
+	displayBlock="true"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<Page id="page" title="{i18n>masterTitle}">
+		<subHeader>
+			<Bar id="searchBar">
+				<contentMiddle>
+					<SearchField id="searchField" showRefreshButton="{device>/isNoTouch}"
+						search="onSearch" tooltip="{i18n>masterSearchTooltip}" width="100%"></SearchField>
+				</contentMiddle>
+			</Bar>
+		</subHeader>
+		<content>
+			<List id="list" items="{/Header}" mode="{device>/listMode}"
+				noDataText="{i18n>masterListNoDataText}" select="onSelect" growing="true"
+				growingScrollToLoad="true">
+				<items>
+					<ObjectListItem type="{device>/listItemType}" press="onSelect"
+						title="{Description}">
+						<attributes>
+							<ObjectAttribute text="{path: 'Date',
+                                type: 'sap.ui.model.type.Date'}" />
+						</attributes>
+					</ObjectListItem>
+				</items>
+			</List>
+		</content>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button icon="sap-icon://add" text="{i18n>AddListButtonText}" tooltip="{i18n>AddListButtonTooltip}"
+						press="onAddList" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

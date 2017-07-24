@@ -1,0 +1,65 @@
+PROCEDURE "KGORIN"."kgorin.shoplist.procedures::ShopItmCreate"(
+		IN i_shopitem "KGORIN"."SHOPLIST/Items", 
+		OUT o_error "KGORIN"."HTTPSTATUS"
+	)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	DEFAULT SCHEMA KGORIN
+AS
+BEGIN
+	DECLARE v_shoplistid STRING;
+	DECLARE v_item INT;
+	DECLARE v_productid STRING;
+	DECLARE v_name STRING;
+	DECLARE v_quantity INT;
+	DECLARE v_user STRING;
+	DECLARE t_item INT := 0;
+	DECLARE t_count INT := 0;
+
+	SELECT "ShoplistID", 
+			"ProductID", 
+			"Name", 
+			"Quantity"
+		INTO v_shoplistid, 
+			v_productid, 
+			v_name, 
+			v_quantity
+		FROM :i_shopitem;
+	SELECT CURRENT_USER AS "user"
+		INTO v_user
+		FROM DUMMY;
+	IF (:v_name = ' '
+OR :v_quantity <= 0) THEN
+		o_error = SELECT 400 AS HTTP_STATUS_CODE, 
+					'All fields must not be empty' AS ERROR_MESSAGE, 
+					' ' AS DETAIL
+				FROM dummy;
+	ELSE
+		SELECT count(*)
+			INTO t_count
+			FROM "SHOPLIST/Header"
+			WHERE "ShoplistID" = :v_shoplistid
+				AND "UserID" = :v_user;
+		IF (:t_count > 0) THEN
+			SELECT max("Item")
+				INTO t_item
+				FROM "SHOPLIST/Items"
+				WHERE "ShoplistID" = :v_shoplistid;
+			IF (:t_item is not null) THEN
+				t_item := t_item + 1;
+			ELSE
+				t_item := 1;
+			END IF;
+			SELECT "ProductID"
+			INTO v_productid
+			FROM "Products"
+			WHERE "Description" = :v_name;
+			INSERT INTO "SHOPLIST/Items" VALUES(:v_shoplistid, :t_item, :v_productid, :v_name, :v_quantity, ' ');
+		ELSE
+			o_error = SELECT 400 AS HTTP_STATUS_CODE, 
+						'No appropriate Header record' AS ERROR_MESSAGE, 
+						' ' AS DETAIL
+					FROM dummy;
+		END IF;
+	END IF;
+END;

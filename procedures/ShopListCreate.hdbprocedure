@@ -1,0 +1,36 @@
+PROCEDURE "KGORIN"."kgorin.shoplist.procedures::ShopListCreate"(
+		IN i_shoplist "KGORIN"."SHOPLIST/Header", 
+		OUT o_error "KGORIN"."HTTPSTATUS"
+	)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	DEFAULT SCHEMA "KGORIN"
+AS
+BEGIN
+	DECLARE v_shoplistid STRING;
+	DECLARE v_user STRING;
+	DECLARE v_description STRING;
+	DECLARE v_date STRING;
+
+	SELECT "ShoplistID", 
+			"UserID", 
+			"Description", 
+			"Date"
+		INTO v_shoplistid, 
+			v_user, 
+			v_description, 
+			v_date
+		FROM :i_shoplist;
+	SELECT CURRENT_USER AS "user"
+		INTO v_user
+		FROM DUMMY;
+	IF (:v_description = ' '
+OR :v_date = ' ') THEN
+		o_error = SELECT 400 AS HTTP_STATUS_CODE, 
+					'All fields must not be empty' AS ERROR_MESSAGE, 
+					' ' AS DETAIL
+				FROM dummy;
+	ELSE
+		INSERT INTO "KGORIN"."SHOPLIST/Header" VALUES("KGORIN"."SHOPLISTID".NEXTVAL, :v_user, :v_description, :v_date);
+	END IF;
+END;

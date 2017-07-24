@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<l:Grid defaultSpan="L12 M12 S12" >
+		<l:content>
+			<List id="idListNormal" items="{/Header('0')/ItemRef}">
+				<items>
+					<InputListItem label="{Name} x {Quantity}"/>
+					</items>
+				</List>
+			</l:content>
+		</l:Grid>
+	</core:FragmentDefinition>
