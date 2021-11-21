@@ -1,5 +1,5 @@
 # sapcoder-ui5-shoplist
-[![License Status][license-image]][license-url]
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 SAP Coder 2017 UI5 Application for Retail Shopping list
 
